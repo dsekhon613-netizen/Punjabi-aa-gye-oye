@@ -1,1 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punjabi Aa Gye Oye</title>
+<meta name="description" content="A Punjabi dating app concept with phone verification, a registration fee, and matches with hidden phone numbers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFF8EC;
+    --bg-soft:#FCEEDA;
+    --card:#FFFFFF;
+    --ink:#2B1810;
+    --ink-soft:#7A5A48;
+    --saffron:#F4A521;
+    --marigold:#E8871E;
+    --rani:#C41E4B;
+    --rani-deep:#9C1638;
+    --green:#1F6E43;
+    --skin:#E9B389;
+    --skin-shade:#D99B6D;
+    --border:rgba(43,24,16,.14);
+    --shadow:rgba(196,30,75,.18);
+    --toast-bg:#2B1810;
+    --toast-ink:#FFF8EC;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#190F10;
+      --bg-soft:#241315;
+      --card:#2A1719;
+      --ink:#F8ECE1;
+      --ink-soft:#D9B7A6;
+      --saffron:#FFC34D;
+      --marigold:#FFA92E;
+      --rani:#FF6E8E;
+      --rani-deep:#FF4D73;
+      --green:#4FC48A;
+      --skin:#C98A5E;
+      --skin-shade:#A96D46;
+      --border:rgba(248,236,225,.16);
+      --shadow:rgba(255,110,142,.28);
+      --toast-bg:#F8ECE1;
+      --toast-ink:#2B1810;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#190F10;
+    --bg-soft:#241315;
+    --card:#2A1719;
+    --ink:#F8ECE1;
+    --ink-soft:#D9B7A6;
+    --saffron:#FFC34D;
+    --marigold:#FFA92E;
+    --rani:#FF6E8E;
+    --rani-deep:#FF4D73;
+    --green:#4FC48A;
+    --skin:#C98A5E;
+    --skin-shade:#A96D46;
+    --border:rgba(248,236,225,.16);
+    --shadow:rgba(255,110,142,.28);
+    --toast-bg:#F8ECE1;
+    --toast-ink:#2B1810;
+    color-scheme: dark;
+  }
 
+  *{box-sizing:border-box;}
+  html,body{height:100%;margin:0;}
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+  body{
+    background-color:var(--bg);
+    background-image:
+      linear-gradient(180deg, color-mix(in srgb, var(--bg) 78%, transparent), color-mix(in srgb, var(--bg) 90%, transparent)),
+      url('images/mustard-field.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:'Mukta',system-ui,sans-serif;
+    display:flex;
+    justify-content:center;
+    padding-inline:16px;
+    padding-block:28px;
+    min-height:100%;
+  }
+
+  .phone{
+    width:100%;
+    max-width:440px;
+    background:linear-gradient(180deg,var(--bg-soft),var(--bg) 60%);
+    border:1px solid var(--border);
+    border-radius:28px;
+    padding:20px 18px 26px;
+    box-shadow:0 30px 60px -30px var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:4px;
+  }
+  .top svg{width:30px;height:30px;flex:none;}
+  .brand{
+    font-family:'Baloo Paaji 2',sans-serif;
+    font-weight:800;
+    font-size:1.5rem;
+    line-height:1.05;
+    letter-spacing:.2px;
+    background:linear-gradient(90deg,var(--rani-deep),var(--marigold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .tagline{
+    font-size:.83rem;
+    color:var(--ink-soft);
+    font-weight:500;
+    margin:2px 0 14px;
+  }
+
+  .photo-frame{
+    position:relative;
+    margin:0 auto 16px;
+    max-width:300px;
+    aspect-ratio:4/5;
+    border-radius:150px 150px 20px 20px;
+    overflow:hidden;
+    border:3px solid var(--saffron);
+    box-shadow:0 22px 40px -20px var(--shadow);
+  }
+  .photo-frame img{
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:50% 32%;
+    display:block;
+  }
+  .photo-garland{position:absolute;top:0;left:0;width:100%;height:20px;opacity:.95;}
+  .photo-garland svg{width:100%;height:100%;display:block;}
+  .photo-badge{
+    position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
+    background:rgba(20,10,8,.55);
+    color:#fff;font-size:.68rem;font-weight:700;
+    padding:5px 11px;border-radius:999px;
+    display:flex;align-items:center;gap:5px;white-space:nowrap;
+    backdrop-filter:blur(2px);
+  }
+  .photo-badge svg{width:11px;height:11px;flex:none;}
+
+  .headline{
+    font-family:'Baloo Paaji 2',sans-serif;
+    font-weight:700;
+    font-size:1.28rem;
+    text-align:center;
+    margin:2px 0 4px;
+    text-wrap:balance;
+  }
+  .subhead{
+    text-align:center;
+    font-size:.88rem;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+    text-wrap:balance;
+  }
+
+  .choice-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  @media (max-width:380px){
+    .choice-grid{grid-template-columns:1fr;}
+  }
+
+  .choice-btn{
+    appearance:none;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    border-radius:18px;
+    padding:16px 12px 14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    font-family:inherit;
+    color:var(--ink);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    text-align:center;
+  }
+  .choice-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 28px -16px var(--shadow);
+    border-color:var(--rani);
+  }
+  .choice-btn:focus-visible{outline:2px solid var(--rani);outline-offset:2px;}
+  .choice-btn .icon-ring{
+    width:52px;height:52px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--bg-soft);
+  }
+  .choice-btn svg{width:28px;height:28px;}
+  .choice-btn .label{
+    font-family:'Baloo Paaji 2',sans-serif;
+    font-weight:700;
+    font-size:1.02rem;
+  }
+  .choice-btn .sub{
+    font-size:.74rem;
+    color:var(--ink-soft);
+  }
+  .choice-btn.kudi .icon-ring{background:color-mix(in srgb, var(--rani) 14%, var(--bg-soft));}
+  .choice-btn.munda .icon-ring{background:color-mix(in srgb, var(--green) 16%, var(--bg-soft));}
+
+  .trust{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px dashed var(--border);
+    font-size:.72rem;
+    color:var(--ink-soft);
+    flex-wrap:wrap;
+    text-align:center;
+  }
+  .trust span{display:flex;align-items:center;gap:5px;}
+  .trust svg{width:13px;height:13px;flex:none;}
+
+  /* form + matches screens */
+  .screen{display:flex;flex-direction:column;gap:14px;}
+  .back{
+    align-self:flex-start;
+    display:flex;align-items:center;gap:6px;
+    background:none;border:none;color:var(--ink-soft);
+    font-family:inherit;font-size:.85rem;font-weight:600;
+    cursor:pointer;padding:4px 0;
+  }
+  .back svg{width:16px;height:16px;}
+  .back:hover{color:var(--rani);}
+
+  .screen h2{
+    font-family:'Baloo Paaji 2',sans-serif;
+    font-size:1.3rem;
+    margin:0;
+    text-wrap:balance;
+  }
+  .screen p.lede{margin:-8px 0 0;color:var(--ink-soft);font-size:.88rem;}
+
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:.78rem;font-weight:700;color:var(--ink-soft);letter-spacing:.02em;text-transform:uppercase;}
+  .field input, .field select, .field textarea{
+    font-family:inherit;
+    font-size:.95rem;
+    padding:11px 12px;
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    background:var(--card);
+    color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--rani);outline-offset:1px;
+  }
+  .field textarea{resize:vertical;min-height:70px;font-family:inherit;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+  .inline-row{display:flex;gap:8px;}
+  .inline-row .field{flex:1;}
+  .ghost-btn{
+    appearance:none;border:1.5px solid var(--rani);background:transparent;color:var(--rani-deep);
+    font-family:inherit;font-weight:700;font-size:.85rem;white-space:nowrap;
+    padding:0 16px;border-radius:12px;cursor:pointer;flex:none;
+  }
+  .ghost-btn:hover{background:var(--rani);color:#fff;}
+  .ghost-btn:disabled{opacity:.5;cursor:not-allowed;}
+  .hint{font-size:.74rem;color:var(--ink-soft);margin:0;}
+  .hint strong{color:var(--ink);}
+
+  .fee-card{
+    background:linear-gradient(160deg,var(--bg-soft),var(--card));
+    border:1.5px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    text-align:center;
+  }
+  .fee-amount{
+    font-family:'Baloo Paaji 2',sans-serif;font-weight:800;font-size:2.2rem;color:var(--rani-deep);
+  }
+  .fee-amount span{font-size:1rem;font-weight:700;color:var(--ink-soft);}
+  .fee-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;text-align:left;font-size:.85rem;}
+  .fee-list li{display:flex;gap:8px;align-items:flex-start;}
+  .fee-list svg{width:15px;height:15px;flex:none;margin-top:2px;color:var(--green);}
+  .pay-btn{
+    appearance:none;border:none;cursor:pointer;width:100%;
+    font-family:'Baloo Paaji 2',sans-serif;font-weight:700;font-size:1rem;
+    color:#fff;background:linear-gradient(90deg,var(--rani-deep),var(--rani));
+    padding:13px 18px;border-radius:14px;
+    box-shadow:0 12px 22px -12px var(--shadow);
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    margin-top:16px;
+  }
+  .pay-btn:disabled{opacity:.75;cursor:wait;}
+  .pay-btn svg{width:16px;height:16px;}
+  .spinner{width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .7s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .secure-note{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    font-size:.72rem;color:var(--ink-soft);margin-top:10px;
+  }
+  .secure-note svg{width:12px;height:12px;flex:none;}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:3px;
+    color:var(--green);font-size:.72rem;font-weight:700;
+  }
+  .verified-badge svg{width:12px;height:12px;}
+  .hidden-number{
+    display:flex;align-items:center;gap:5px;
+    font-size:.76rem;color:var(--ink-soft);
+    font-variant-numeric:tabular-nums;
+    margin:2px 0 6px;
+  }
+  .hidden-number svg{width:12px;height:12px;flex:none;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px;}
+  .tag{
+    font-size:.7rem;font-weight:600;color:var(--ink-soft);
+    background:var(--bg-soft);border-radius:999px;padding:3px 9px;
+  }
+
+  .submit-btn{
+    appearance:none;border:none;cursor:pointer;
+    font-family:'Baloo Paaji 2',sans-serif;font-weight:700;font-size:1rem;
+    color:#fff;
+    background:linear-gradient(90deg,var(--rani-deep),var(--rani));
+    padding:13px 18px;border-radius:14px;
+    box-shadow:0 12px 22px -12px var(--shadow);
+    margin-top:4px;
+  }
+  .submit-btn:hover{filter:brightness(1.05);}
+  .submit-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+  .err{color:var(--rani-deep);font-size:.78rem;font-weight:600;min-height:1em;}
+
+  .match-card{
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--card);
+    border:1.5px solid var(--border);
+    border-radius:16px;
+    padding:12px;
+  }
+  .avatar{
+    width:50px;height:50px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Baloo Paaji 2',sans-serif;font-weight:700;color:#fff;font-size:1rem;
+  }
+  .match-info{flex:1;min-width:0;}
+  .match-info .name-row{display:flex;justify-content:space-between;gap:8px;align-items:baseline;}
+  .match-info .name{font-family:'Baloo Paaji 2',sans-serif;font-weight:700;font-size:.98rem;}
+  .match-info .age-city{font-size:.75rem;color:var(--ink-soft);white-space:nowrap;}
+  .match-info .bio{font-size:.83rem;color:var(--ink-soft);margin:4px 0 8px;}
+  .say-btn{
+    appearance:none;border:1.5px solid var(--rani);background:transparent;color:var(--rani-deep);
+    font-family:inherit;font-weight:700;font-size:.78rem;
+    padding:6px 12px;border-radius:999px;cursor:pointer;
+  }
+  :root[data-theme="dark"] .say-btn, @media (prefers-color-scheme:dark){ .say-btn{color:var(--rani);} }
+  .say-btn:hover{background:var(--rani);color:#fff;}
+
+  .welcome-back{
+    font-size:.8rem;color:var(--ink-soft);
+    background:var(--bg-soft);border-radius:12px;padding:8px 12px;
+  }
+
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,12px);
+    background:var(--toast-bg);color:var(--toast-ink);
+    font-size:.85rem;font-weight:600;
+    padding:10px 16px;border-radius:999px;
+    opacity:0;pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    z-index:20;
+    max-width:88vw;text-align:center;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .choice-btn, .toast{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <div class="top">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" fill="var(--saffron)"/>
+      <path d="M12 5 L13.6 9.8 L18.6 9.8 L14.6 12.7 L16.2 17.5 L12 14.6 L7.8 17.5 L9.4 12.7 L5.4 9.8 L10.4 9.8 Z" fill="var(--rani-deep)"/>
+    </svg>
+    <div class="brand">Punjabi Aa Gye Oye</div>
+  </div>
+  <p class="tagline">Sachi gallbaat, sachi mulaqat — real Punjabi singles, real connections.</p>
+
+  <!-- HOME SCREEN -->
+  <section id="screen-home" class="screen">
+    <div class="photo-frame">
+      <img src="images/couple.jpg" alt="A Punjabi man and woman in casual clothes laughing together outdoors" loading="lazy">
+      <div class="photo-garland" aria-hidden="true">
+        <svg viewBox="0 0 300 20" preserveAspectRatio="none">
+          <g fill="var(--saffron)">
+            <circle cx="15" cy="10" r="7"/><circle cx="45" cy="6" r="7"/><circle cx="75" cy="10" r="7"/><circle cx="105" cy="6" r="7"/>
+            <circle cx="135" cy="10" r="7"/><circle cx="165" cy="6" r="7"/><circle cx="195" cy="10" r="7"/><circle cx="225" cy="6" r="7"/>
+            <circle cx="255" cy="10" r="7"/><circle cx="285" cy="6" r="7"/>
+          </g>
+        </svg>
+      </div>
+      <span class="photo-badge">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Real Punjabi singles
+      </span>
+    </div>
+
+    <h1 class="headline">Ready to meet someone new?</h1>
+    <p class="subhead">Tell us who you are and we'll show you Punjabi singles to match and chat with.</p>
+
+    <div class="choice-grid">
+      <button class="choice-btn kudi" data-type="kudi" type="button">
+        <span class="icon-ring">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3c-3 3-3 6 0 8 3-2 3-5 0-8Z" fill="var(--rani)"/><path d="M12 11v10M8 15c1.5 1.5 6.5 1.5 8 0" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <span class="label">Punjabi Kudi</span>
+        <span class="sub">Match with a munda</span>
+      </button>
+      <button class="choice-btn munda" data-type="munda" type="button">
+        <span class="icon-ring">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12c0-5 3.5-8 8-8s8 3 8 8c-2-2-4 1-8 1s-6-3-8-1Z" fill="var(--saffron)"/><circle cx="12" cy="10" r="2" fill="var(--marigold)"/></svg>
+        </span>
+        <span class="label">Punjabi Munda</span>
+        <span class="sub">Match with a kudi</span>
+      </button>
+    </div>
+
+    <div class="trust">
+      <span><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="var(--green)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>18+ verified singles</span>
+      <span><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="var(--green)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Real Punjabi profiles</span>
+    </div>
+  </section>
+
+  <!-- PHONE VERIFICATION SCREEN -->
+  <section id="screen-phone" class="screen" hidden>
+    <button class="back" type="button" data-nav="home">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <h2>Verify your number</h2>
+    <p class="lede">One real phone number, one account — this keeps profiles genuine.</p>
+
+    <div class="field">
+      <label for="f-phone">Mobile number</label>
+      <div class="inline-row">
+        <input id="f-phone" type="tel" placeholder="+44 7123 456789" autocomplete="off">
+        <button class="ghost-btn" id="send-code-btn" type="button">Send code</button>
+      </div>
+    </div>
+
+    <div class="field" id="otp-field" hidden>
+      <label for="f-otp">Enter the 6-digit code</label>
+      <div class="inline-row">
+        <input id="f-otp" type="text" inputmode="numeric" maxlength="6" placeholder="123456" autocomplete="off">
+        <button class="ghost-btn" id="verify-code-btn" type="button">Verify</button>
+      </div>
+      <p class="hint">Demo code: <strong>123456</strong> — in the live app this is texted to your phone.</p>
+    </div>
+
+    <p class="err" id="phone-err" role="alert"></p>
+  </section>
+
+  <!-- FORM SCREEN -->
+  <section id="screen-form" class="screen" hidden>
+    <button class="back" type="button" data-nav="home">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <h2 id="form-title">Set up your profile</h2>
+    <p class="lede" id="form-lede">A few basics and we'll show you people to match with.</p>
+
+    <form id="profile-form" class="screen" style="gap:14px;">
+      <div class="field">
+        <label for="f-name">Full name</label>
+        <input id="f-name" name="name" type="text" placeholder="e.g. Jaspreet Kaur" autocomplete="off" required>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label for="f-age">Age</label>
+          <input id="f-age" name="age" type="number" min="18" max="75" placeholder="27" required>
+        </div>
+        <div class="field">
+          <label for="f-city">City</label>
+          <select id="f-city" name="city" required>
+            <option value="" disabled selected>Choose city</option>
+            <option>Amritsar</option>
+            <option>Ludhiana</option>
+            <option>Jalandhar</option>
+            <option>Chandigarh</option>
+            <option>Patiala</option>
+            <option>Mohali</option>
+            <option>Bathinda</option>
+            <option>NRI / Abroad</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-bio">About you</label>
+        <textarea id="f-bio" name="bio" placeholder="Simple, family-oriented, loves bhangra and long drives to the pind."></textarea>
+      </div>
+      <p class="err" id="form-err" role="alert"></p>
+      <button class="submit-btn" type="submit">Continue</button>
+    </form>
+  </section>
+
+  <!-- PAYMENT SCREEN -->
+  <section id="screen-payment" class="screen" hidden>
+    <button class="back" type="button" data-nav="home">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <h2>One-time registration fee</h2>
+    <p class="lede">A small fee keeps this a genuine, spam-free community.</p>
+
+    <div class="fee-card">
+      <div class="fee-amount">£2.00 <span>one-time</span></div>
+      <ul class="fee-list">
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified badge on your profile</li>
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited matches and messages</li>
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Your number always stays hidden</li>
+      </ul>
+      <button class="pay-btn" id="pay-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="#fff" stroke-width="1.8"/><path d="M2.5 9.5h19" stroke="#fff" stroke-width="1.8"/></svg>
+        Pay £2.00
+      </button>
+      <p class="secure-note">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8"/></svg>
+        Demo payment — no card details are collected or charged. Live payments are handled securely by Stripe.
+      </p>
+    </div>
+  </section>
+
+  <!-- MATCHES SCREEN -->
+  <section id="screen-matches" class="screen" hidden>
+    <button class="back" type="button" data-nav="home">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <h2>Your matches</h2>
+    <p class="welcome-back" id="welcome-back" hidden></p>
+    <div id="matches-list" class="screen" style="gap:10px;"></div>
+  </section>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'paago-profile-v2';
+  var PHONES_KEY = 'paago-phones-v1';
+  var DEMO_CODE = '123456';
+
+  var screens = {
+    home: document.getElementById('screen-home'),
+    phone: document.getElementById('screen-phone'),
+    form: document.getElementById('screen-form'),
+    payment: document.getElementById('screen-payment'),
+    matches: document.getElementById('screen-matches')
+  };
+
+  function show(name){
+    Object.keys(screens).forEach(function(k){ screens[k].hidden = (k !== name); });
+  }
+
+  var mundaMatches = [
+    { name:'Harpreet Singh', age:29, city:'Ludhiana', distance:'3 miles away', phone:'+447911223344', tags:['Kabaddi','Family business','Foodie'], bio:'Runs a family transport business, plays kabaddi on weekends.' },
+    { name:'Gurjot Singh', age:31, city:'Chandigarh', distance:'7 miles away', phone:'+447700556677', tags:['Software engineer','Gym','Travel'], bio:'Software engineer, first one in the family to move abroad for work.' },
+    { name:'Manpreet Singh', age:27, city:'Amritsar', distance:'1 mile away', phone:'+447822994411', tags:['Kirtan','Cooking','Cricket'], bio:'Loves gurbani kirtan and cooking sarson da saag for the family.' },
+    { name:'Jaskaran Singh', age:33, city:'Mohali', distance:'12 miles away', phone:'+447555122389', tags:['Bhangra','Dog dad','Coffee'], bio:'Bhangra instructor on weekends, mostly a homebody the rest of the week.' }
+  ];
+  var kudiMatches = [
+    { name:'Simran Kaur', age:26, city:'Jalandhar', distance:'2 miles away', phone:'+447933445566', tags:['Giddha','Teaching','Bollywood'], bio:'Schoolteacher, dances giddha at every wedding she can find.' },
+    { name:'Amanpreet Kaur', age:28, city:'Patiala', distance:'5 miles away', phone:'+447766112233', tags:['Fashion','Phulkari','Small business'], bio:'Runs a boutique phulkari label, close to her nani and family.' },
+    { name:'Navjot Kaur', age:25, city:'Mohali', distance:'4 miles away', phone:'+447644998877', tags:['Nursing','Cooking','Hiking'], bio:'Nurse by day, makes the best chole bhature on the street.' },
+    { name:'Ramanpreet Kaur', age:30, city:'Amritsar', distance:'9 miles away', phone:'+447511667788', tags:['Yoga','Punjabi music','Baking'], bio:'Yoga teacher who still can\'t resist a plate of jalebi after class.' }
+  ];
+
+  var initialColors = ['var(--rani)','var(--saffron)','var(--green)'];
+
+  var selectedType = null;
+  var verifiedPhone = null;
+  var pendingProfile = null;
+
+  function normalizePhone(raw){
+    return (raw || '').replace(/[^\d+]/g, '');
+  }
+
+  function getRegisteredPhones(){
+    try{
+      var raw = localStorage.getItem(PHONES_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+
+  function isPhoneRegistered(phone){
+    var list = getRegisteredPhones();
+    return list.indexOf(normalizePhone(phone)) !== -1;
+  }
+
+  function addRegisteredPhone(phone){
+    try{
+      var list = getRegisteredPhones();
+      var norm = normalizePhone(phone);
+      if(list.indexOf(norm) === -1){ list.push(norm); }
+      localStorage.setItem(PHONES_KEY, JSON.stringify(list));
+    }catch(e){}
+  }
+
+  function maskPhone(raw){
+    var digits = normalizePhone(raw);
+    if(digits.length < 6) return digits;
+    var head = digits.slice(0, digits[0] === '+' ? 3 : 2);
+    var tail = digits.slice(-2);
+    return head + ' •• •••• ' + tail;
+  }
+
+  function resetPhoneScreen(){
+    document.getElementById('f-phone').value = '';
+    document.getElementById('f-otp').value = '';
+    document.getElementById('otp-field').hidden = true;
+    document.getElementById('phone-err').textContent = '';
+    document.getElementById('send-code-btn').disabled = false;
+    document.getElementById('send-code-btn').textContent = 'Send code';
+  }
+
+  document.querySelectorAll('.choice-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      selectedType = btn.getAttribute('data-type');
+      var title = document.getElementById('form-title');
+      var lede = document.getElementById('form-lede');
+      if(selectedType === 'kudi'){
+        title.textContent = 'Set up your profile, kudi';
+        lede.textContent = "We'll match you with Punjabi mundas looking to meet a kudi like you.";
+      } else {
+        title.textContent = 'Set up your profile, munda';
+        lede.textContent = "We'll match you with Punjabi kudis looking to meet a munda like you.";
+      }
+      document.getElementById('form-err').textContent = '';
+      resetPhoneScreen();
+      show('phone');
+      document.getElementById('f-phone').focus();
+    });
+  });
+
+  document.querySelectorAll('[data-nav="home"]').forEach(function(btn){
+    btn.addEventListener('click', function(){ show('home'); });
+  });
+
+  document.getElementById('send-code-btn').addEventListener('click', function(){
+    var phoneInput = document.getElementById('f-phone');
+    var err = document.getElementById('phone-err');
+    var phone = phoneInput.value.trim();
+    var digits = normalizePhone(phone);
+
+    if(digits.replace('+','').length < 8){
+      err.textContent = 'Enter a valid mobile number, including country code.';
+      return;
+    }
+    if(isPhoneRegistered(phone)){
+      err.textContent = 'An account already exists for this number.';
+      return;
+    }
+    err.textContent = '';
+    document.getElementById('otp-field').hidden = false;
+    document.getElementById('f-otp').focus();
+    showToast('Demo code sent: ' + DEMO_CODE);
+  });
+
+  document.getElementById('verify-code-btn').addEventListener('click', function(){
+    var code = document.getElementById('f-otp').value.trim();
+    var err = document.getElementById('phone-err');
+    var phone = document.getElementById('f-phone').value.trim();
+
+    if(code !== DEMO_CODE){
+      err.textContent = 'Incorrect code — try ' + DEMO_CODE + ' for this demo.';
+      return;
+    }
+    err.textContent = '';
+    verifiedPhone = phone;
+    show('form');
+    document.getElementById('f-name').focus();
+  });
+
+  document.getElementById('profile-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('f-name').value.trim();
+    var age = document.getElementById('f-age').value;
+    var city = document.getElementById('f-city').value;
+    var bio = document.getElementById('f-bio').value.trim();
+    var err = document.getElementById('form-err');
+
+    if(!name || !age || !city){
+      err.textContent = 'Please fill in your name, age and city.';
+      return;
+    }
+    err.textContent = '';
+
+    pendingProfile = { type: selectedType, name: name, age: age, city: city, bio: bio, phone: verifiedPhone, paid: false };
+    show('payment');
+  });
+
+  document.getElementById('pay-btn').addEventListener('click', function(){
+    var btn = this;
+    if(!pendingProfile) return;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Processing…';
+
+    setTimeout(function(){
+      pendingProfile.paid = true;
+      addRegisteredPhone(pendingProfile.phone);
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(pendingProfile)); }catch(e){}
+      renderMatches(pendingProfile);
+      showToast('Payment simulated — welcome to Punjabi Aa Gye Oye!');
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="#fff" stroke-width="1.8"/><path d="M2.5 9.5h19" stroke="#fff" stroke-width="1.8"/></svg> Pay £2.00';
+    }, 1300);
+  });
+
+  function initialsOf(fullName){
+    var parts = fullName.split(/\s+/).filter(Boolean);
+    var a = parts[0] ? parts[0][0] : '';
+    var b = parts[1] ? parts[1][0] : '';
+    return (a+b).toUpperCase();
+  }
+
+  function renderMatches(profile){
+    var list = profile.type === 'kudi' ? mundaMatches : kudiMatches;
+    var wb = document.getElementById('welcome-back');
+    if(profile.name){
+      wb.hidden = false;
+      wb.textContent = 'Welcome back, ' + profile.name + ' — here are matches near ' + (profile.city || 'you') + '.';
+    } else {
+      wb.hidden = true;
+    }
+
+    var container = document.getElementById('matches-list');
+    container.innerHTML = '';
+    list.forEach(function(m, i){
+      var card = document.createElement('div');
+      card.className = 'match-card';
+      var tags = m.tags.map(function(t){ return '<span class="tag">'+t+'</span>'; }).join('');
+      card.innerHTML =
+        '<div class="avatar" style="background:'+initialColors[i % initialColors.length]+'">'+initialsOf(m.name)+'</div>' +
+        '<div class="match-info">' +
+          '<div class="name-row"><span class="name">'+m.name+' <span class="verified-badge"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span></span><span class="age-city">'+m.age+' &middot; '+m.distance+'</span></div>' +
+          '<div class="hidden-number"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8"/></svg>'+maskPhone(m.phone)+' &middot; hidden</div>' +
+          '<div class="tag-row">'+tags+'</div>' +
+          '<p class="bio">'+m.bio+'</p>' +
+          '<button type="button" class="say-btn">Say Sat Sri Akal</button>' +
+        '</div>';
+      container.appendChild(card);
+    });
+
+    container.querySelectorAll('.say-btn').forEach(function(b){
+      b.addEventListener('click', function(){ showToast('Message sent! (this is a demo)'); });
+    });
+
+    show('matches');
+  }
+
+  var toastTimer = null;
+  function showToast(msg){
+    var toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+
+  try{
+    var saved = localStorage.getItem(STORAGE_KEY);
+    if(saved){
+      var profile = JSON.parse(saved);
+      if(profile && profile.type && profile.paid){
+        selectedType = profile.type;
+        renderMatches(profile);
+      }
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
